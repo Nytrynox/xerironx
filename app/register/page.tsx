@@ -39,13 +39,47 @@ export default function RegisterPage() {
     }
   }
 
+  const handleAppleSignUp = async () => {
+    if (!signIn) return
+    setIsLoading(true)
+    try {
+      if (name.trim()) {
+        localStorage.setItem('xerironx.userName', name.trim())
+      }
+      const result = await signIn('apple', { callbackUrl: '/' })
+      console.log('Apple sign-up result:', result)
+    } catch (error) {
+      console.error('Apple sign-up error:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleEmailSignUp = async () => {
+    if (!signIn) return
+    const email = prompt('Enter your email address:')
+    if (!email) return
+    setIsLoading(true)
+    try {
+      if (name.trim()) {
+        localStorage.setItem('xerironx.userName', name.trim())
+      }
+      const result = await signIn('email', { email, callbackUrl: '/' })
+      console.log('Email sign-up result:', result)
+    } catch (error) {
+      console.error('Email sign-up error:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--bg)] p-4">
       <motion.div initial={{opacity:0, y:8}} animate={{opacity:1, y:0}} transition={{duration:0.4}} className="w-full max-w-md bg-white rounded-2xl border border-gray-200 p-8 shadow-xl">
         <div className="flex flex-col items-center text-center">
           <Logo size={96} />
           <h1 className="mt-4 text-2xl font-display font-extrabold tracking-tight">Create your account</h1>
-          <p className="text-gray-600 mt-1">Set a display name and connect Google</p>
+          <p className="text-gray-600 mt-1">Set a display name and choose your sign-in method</p>
         </div>
 
         <div className="mt-6 grid gap-2">
@@ -57,7 +91,7 @@ export default function RegisterPage() {
             placeholder="Your name"
             className="input-modern rounded-xl border border-gray-200 px-3 py-2"
           />
-          <p className="text-xs text-gray-500">We use this name in greetings; Google name shows elsewhere.</p>
+          <p className="text-xs text-gray-500">We use this name in greetings; your provider name shows elsewhere.</p>
         </div>
 
         <div className="mt-6 grid gap-3">
@@ -77,6 +111,36 @@ export default function RegisterPage() {
               </svg>
             )}
             {isLoading ? 'Creating account...' : 'Continue with Google'}
+          </button>
+
+          <button
+            className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-black text-white hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed px-4 py-3 font-medium transition-colors"
+            onClick={handleAppleSignUp}
+            disabled={!signIn || isLoading}
+          >
+            {isLoading ? (
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-gray-300 border-t-white"></div>
+            ) : (
+              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/>
+              </svg>
+            )}
+            Continue with Apple
+          </button>
+
+          <button
+            className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed px-4 py-3 font-medium transition-colors"
+            onClick={handleEmailSignUp}
+            disabled={!signIn || isLoading}
+          >
+            {isLoading ? (
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-gray-300 border-t-white"></div>
+            ) : (
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            )}
+            Continue with Email
           </button>
           
           {!signIn && (
