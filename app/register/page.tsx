@@ -1,19 +1,20 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Logo } from '@/components/Logo'
 
 export default function RegisterPage() {
   const [name, setName] = useState('')
+  const [signIn, setSignIn] = useState<null | ((provider?: string, options?: any) => Promise<void>)>(null)
 
   useEffect(() => {
     try {
       const saved = localStorage.getItem('xerironx.userName')
       if (saved) setName(saved)
     } catch {}
+    import('next-auth/react').then((m) => setSignIn(() => m.signIn as any)).catch(() => setSignIn(null))
   }, [])
 
   const handleSave = () => {
@@ -44,7 +45,7 @@ export default function RegisterPage() {
         <div className="mt-6 grid gap-3">
           <button
             className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 px-4 py-3 font-medium"
-            onClick={() => signIn('google', { callbackUrl: '/' })}
+            onClick={() => signIn?.('google', { callbackUrl: '/' })}
           >
             <img src="/logo.svg" className="h-5 w-5" alt="Google" />
             Continue with Google

@@ -20,3 +20,5 @@ dataconnect/
 src/dataconnect-generated/
 functions/
 studio1/
+.vercel
+.env*.local

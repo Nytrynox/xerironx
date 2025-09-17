@@ -1,12 +1,26 @@
 "use client"
 
-import { useSession, signOut } from 'next-auth/react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 export default function ProfilePage() {
-  const { data: session } = useSession()
-  const user = session?.user
+  const [useSessionHook, setUseSessionHook] = useState<null | (() => { data: any } | any)>(null)
+  const [signOutFn, setSignOutFn] = useState<null | ((options?: any) => Promise<void>)>(null)
+  useEffect(() => {
+    import('next-auth/react')
+      .then((m) => {
+        setUseSessionHook(() => (m as any).useSession)
+        setSignOutFn(() => (m as any).signOut)
+      })
+      .catch(() => {
+        setUseSessionHook(null)
+        setSignOutFn(null)
+      })
+  }, [])
+
+  const sessionData = useSessionHook ? (useSessionHook() as any)?.data : null
+  const user = sessionData?.user
 
   return (
     <div className="min-h-screen bg-[var(--bg)] p-6">
@@ -23,7 +37,7 @@ export default function ProfilePage() {
 
           <div className="mt-6 flex gap-3">
             {user ? (
-              <button onClick={() => signOut({ callbackUrl: '/' })} className="px-4 py-2 rounded-xl bg-red-50 text-red-600 border border-red-200">Sign out</button>
+              <button onClick={() => signOutFn?.({ callbackUrl: '/' })} className="px-4 py-2 rounded-xl bg-red-50 text-red-600 border border-red-200">Sign out</button>
             ) : (
               <Link href="/login" className="px-4 py-2 rounded-xl bg-gray-900 text-white">Sign in</Link>
             )}

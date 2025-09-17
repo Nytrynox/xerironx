@@ -1,15 +1,16 @@
 "use client"
 
-import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Logo } from '@/components/Logo'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { getFirebaseAnalytics } from '@/lib/firebase'
 
 export default function LoginPage() {
+  const [signIn, setSignIn] = useState<null | ((provider?: string, options?: any) => Promise<void>)>(null)
   useEffect(() => {
     getFirebaseAnalytics()
+    import('next-auth/react').then((m) => setSignIn(() => m.signIn as any)).catch(() => setSignIn(null))
   }, [])
   return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--bg)] p-4">
@@ -23,7 +24,7 @@ export default function LoginPage() {
         <div className="mt-8 grid gap-3">
           <button
             className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 px-4 py-3 font-medium"
-            onClick={() => signIn('google', { callbackUrl: '/' })}
+            onClick={() => signIn?.('google', { callbackUrl: '/' })}
           >
             <img src="/logo.svg" className="h-5 w-5" alt="Google" />
             Continue with Google
