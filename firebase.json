@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "site": "xerironx-studio",
+    "source": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

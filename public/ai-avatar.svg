@@ -1,0 +1,17 @@
+<!-- AI Assistant Avatar SVG -->
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="40" height="40" rx="20" fill="url(#paint0_linear)"/>
+  <path d="M26.167 10H13.8337C11.7167 10 10 11.7167 10 13.8333V26.1667C10 28.2833 11.7167 30 13.8337 30H26.167C28.2837 30 30.0003 28.2833 30.0003 26.1667V13.8333C30.0003 11.7167 28.2837 10 26.167 10Z" fill="url(#paint1_linear)"/>
+  <path d="M20.0003 18.3333C21.8413 18.3333 23.3337 16.841 23.3337 15C23.3337 13.159 21.8413 11.6667 20.0003 11.6667C18.1593 11.6667 16.667 13.159 16.667 15C16.667 16.841 18.1593 18.3333 20.0003 18.3333Z" fill="white"/>
+  <path d="M20.0003 20C16.3187 20 13.3337 22.985 13.3337 26.6667C13.3337 27.5833 14.0837 28.3333 15.0003 28.3333H25.0003C25.917 28.3333 26.667 27.5833 26.667 26.6667C26.667 22.985 23.682 20 20.0003 20Z" fill="white"/>
+  <defs>
+    <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0091FF"/>
+      <stop offset="1" stop-color="#8A2BE2"/>
+    </linearGradient>
+    <linearGradient id="paint1_linear" x1="10" y1="10" x2="30.0003" y2="30" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0091FF"/>
+      <stop offset="1" stop-color="#8A2BE2"/>
+    </linearGradient>
+  </defs>
+</svg>

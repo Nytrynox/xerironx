@@ -18,7 +18,7 @@ Rules:
 - The page MUST include the requested sections from the prompt (e.g., hero, features grid, pricing table, CTA) with clean, modern styling.
 - Include at least one working <script> that fetches LIVE data from a CORS-friendly public API (e.g., https://jsonplaceholder.typicode.com/posts?_limit=3) and renders it in a section.
 - Use images via CORS-friendly public sources (e.g., https://picsum.photos/) or direct HTTPS URLs.
-Use images via CORS-friendly public sources (e.g., https://picsum.photos/) or direct HTTPS URLs.
+- All asset URLs MUST be valid absolute HTTPS URLs (e.g., https://cdn.tailwindcss.com). Do not include stray quotes inside attribute values, do not use protocol-relative URLs (//), and ensure protocols include two slashes (https://, not https:/).
 
 Design requirements for consistency and professionalism:
 - Use a cohesive, accessible color palette with sufficient contrast (WCAG AA).
@@ -26,7 +26,7 @@ Design requirements for consistency and professionalism:
 - Responsive layout from mobile-first up to desktop; avoid overflow and horizontal scrolling.
 - Prefer semantic HTML5 landmarks (header, nav, main, section, footer) and aria labels where needed.
 - Typography: use Inter via Google Fonts or system UI stack; clear hierarchy (h1–h3, body, small).
-- Tailwind CSS via CDN is recommended for utilities; keep class lists readable and avoid redundancy.
+- Tailwind CSS via CDN is recommended for utilities; keep class lists readable and avoid redundancy. Use <script src="https://cdn.tailwindcss.com"></script> exactly.
 - Add focus and hover styles to interactive elements; large tap targets.
 - Keep JavaScript minimal and self-contained; no external scripts apart from Tailwind CDN.
 `
