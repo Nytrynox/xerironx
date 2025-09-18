@@ -17,6 +17,14 @@ export async function GET(req: NextRequest) {
       openrouter: !!process.env.OPENROUTER_API_KEY,
       nextauth: !!process.env.NEXTAUTH_SECRET
     },
+    debug: {
+      hasGoogleClientId: !!process.env.GOOGLE_CLIENT_ID,
+      hasGoogleClientSecret: !!process.env.GOOGLE_CLIENT_SECRET,
+      hasNextAuthSecret: !!process.env.NEXTAUTH_SECRET,
+      hasOpenRouterKey: !!process.env.OPENROUTER_API_KEY,
+      googleClientIdLength: process.env.GOOGLE_CLIENT_ID?.length || 0,
+      googleClientSecretLength: process.env.GOOGLE_CLIENT_SECRET?.length || 0
+    },
     environment: process.env.NODE_ENV || 'development'
   }
 
