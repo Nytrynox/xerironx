@@ -1,5 +1,5 @@
-import { NextRequest } from 'next/server'
-import { getSiteOrigin } from '@/lib/utils'
+import { NextRequest, NextResponse } from 'next/server';
+import { getOpenRouterHeaders } from '@/lib/utils';
 
 export const runtime = 'edge'
 
@@ -26,12 +26,7 @@ export async function POST(req: NextRequest) {
     ]
   })
 
-  const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${apiKey}`,
-    'HTTP-Referer': getSiteOrigin(),
-    'X-Title': 'Xerironx'
-  }
+  const headers = getOpenRouterHeaders()
 
   let attempt = 0
   let lastRes: Response | null = null

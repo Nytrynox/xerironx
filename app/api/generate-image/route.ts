@@ -1,6 +1,6 @@
-import { NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server';
+import { getOpenRouterHeaders } from '@/lib/utils';
 import { DEFAULT_IMAGE_MODEL, IMAGE_MODELS } from '@/lib/constants'
-import { getSiteOrigin } from '@/lib/utils'
 
 export const runtime = 'edge'
 
@@ -42,12 +42,7 @@ export async function POST(req: NextRequest) {
 
     const res = await fetch(`${baseUrl}/chat/completions`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-        'HTTP-Referer': getSiteOrigin(),
-        'X-Title': 'Xerironx'
-      },
+      headers: getOpenRouterHeaders(),
       body: JSON.stringify(body)
     })
 

@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import { FALLBACK_MODELS } from '@/lib/constants'
-import { getSiteOrigin } from '@/lib/utils'
+import { getOpenRouterHeaders } from '@/lib/utils'
 
 export const runtime = 'edge'
 
@@ -38,12 +38,7 @@ export async function POST(req: NextRequest) {
 		}
 		return fetch(`${baseUrl}/chat/completions`, {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${apiKey}`,
-				'HTTP-Referer': getSiteOrigin(),
-					'X-Title': 'Xerironx'
-			},
+			headers: getOpenRouterHeaders(),
 			body: JSON.stringify(body)
 		})
 	}
