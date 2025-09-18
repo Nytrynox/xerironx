@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server'
 import { systemPrompt } from '@/lib/prompt'
 import { FALLBACK_MODELS, SITE_NAME } from '@/lib/constants'
+import { getSiteOrigin } from '@/lib/utils'
 
 export const runtime = 'edge'
 
@@ -52,7 +53,7 @@ export async function POST(req: NextRequest) {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`,
-        'HTTP-Referer': (process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || 'https://xerironx.vercel.app').replace(/\/$/, ''),
+        'HTTP-Referer': getSiteOrigin(),
         'X-Title': 'Xerironx'
       },
       body: JSON.stringify(body)

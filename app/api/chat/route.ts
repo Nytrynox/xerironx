@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server'
 import { FALLBACK_MODELS } from '@/lib/constants'
+import { getSiteOrigin } from '@/lib/utils'
 
 export const runtime = 'edge'
 
@@ -9,7 +10,7 @@ export async function POST(req: NextRequest) {
 	const apiKey = process.env.OPENROUTER_API_KEY
 	const baseUrl = process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1'
 
-	if (!apiKey) {
+	if (!apiKey) {	
 		const encoder = new TextEncoder()
 		const mock = `Hello! (No OPENROUTER_API_KEY set). You asked: "${messages?.[messages.length-1]?.content || ''}".`
 		const chunks = mock.match(/.{1,80}/g) || [mock]
@@ -40,7 +41,7 @@ export async function POST(req: NextRequest) {
 			headers: {
 				'Content-Type': 'application/json',
 				'Authorization': `Bearer ${apiKey}`,
-					'HTTP-Referer': (process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || 'https://xerironx.vercel.app').replace(/\/$/, ''),
+				'HTTP-Referer': getSiteOrigin(),
 					'X-Title': 'Xerironx'
 			},
 			body: JSON.stringify(body)

@@ -59,3 +59,16 @@ export function generateId(): string {
 export function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+// Resolve canonical site origin for server-side usage (no trailing slash)
+export function getSiteOrigin(): string {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || 'https://xerironx.vercel.app'
+  return raw.replace(/\/$/, '')
+}
+
+// Build absolute URL safely
+export function siteUrl(path: string): string {
+  const base = getSiteOrigin()
+  if (!path.startsWith('/')) return `${base}/${path}`
+  return `${base}${path}`
+}
