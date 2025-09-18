@@ -12,8 +12,14 @@ const authOptions: NextAuthOptions = {
         params: {
           prompt: 'consent',
           access_type: 'offline',
-          response_type: 'code'
+          response_type: 'code',
+          // Disable One Tap to avoid wallet extension conflicts
+          disable_signup: 'false'
         }
+      },
+      // Additional config to prevent One Tap interference
+      httpOptions: {
+        timeout: 10000,
       }
     })
     // Apple and Email providers temporarily disabled until properly configured
@@ -44,6 +50,12 @@ const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/login',
     error: '/login',
+  },
+  // Disable automatic One Tap to prevent wallet extension conflicts
+  events: {
+    async signIn({ user, account, profile }) {
+      // Successful sign in - no return needed for events
+    }
   },
   callbacks: {
     async jwt({ token, account, profile, user }) {
