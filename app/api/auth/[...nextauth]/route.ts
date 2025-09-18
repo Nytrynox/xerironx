@@ -80,11 +80,17 @@ const authOptions: NextAuthOptions = {
       return true
     },
     async redirect({ url, baseUrl }) {
-      // Allows relative callback URLs
-      if (url.startsWith('/')) return `${baseUrl}${url}`
-      // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) return url
-      return baseUrl
+      // Normalize and always land in studio after auth unless explicitly directing elsewhere
+      try {
+        const target = new URL(url, baseUrl)
+        // If callback is root or login, send to /studio
+        if ([baseUrl+'/', baseUrl+'/login', baseUrl].includes(target.href)) {
+          return baseUrl + '/studio'
+        }
+        // Constrain to same origin
+        if (target.origin === baseUrl) return target.href
+      } catch {}
+      return baseUrl + '/studio'
     }
   },
   debug: true, // Enable debug for now
